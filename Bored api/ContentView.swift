@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var activity: String = ""
     @State private var activityArray = [String]()
     @State private var showingAlert = false
+    @State private var isSelected = false
     var body: some View {
         ZStack{
             Color.green
