@@ -21,9 +21,11 @@ struct ContentView: View {
             Color.green
                 .ignoresSafeArea()
             VStack{
-                Spacer()
                 Text("An activity you should do today:")
                     .padding()
+                    .fontWeight(.heavy)
+                    .bold()
+                Spacer()
                 HStack {
                     Button {
                         if added == false {
@@ -53,23 +55,28 @@ struct ContentView: View {
                           dismissButton: .default(Text("OK"))
                     )
                 }
-                Text("Your list")
-                VStack {
-                    ForEach(0 ..< activityArray.count, id: \.self) { value in
-                        HStack{
-                            Button {
+                ZStack{
+                    Color.init(red: 0.0, green: 0.9, blue: 0.5)
+                    VStack {
+                        Text("Your list:")
+                        ForEach(0 ..< activityArray.count, id: \.self) { value in
+                            HStack{
+                                Button {
+                                    activityArray.remove(at: value)
+                                } label : {
+                                    Text("-")
+                                }
+                                .background(.blue)
+                                .foregroundColor(.white)
                                 
-                                activityArray.remove(at: value)
-                            } label : {
-                               Text("-")
+                                Text("\(activityArray[value])")
                             }
-                            .clipShape(Circle())
-                            Text("\(activityArray[value])")
-                        }
-                            }
-                }
                             
-                Spacer()
+                        }
+                        Spacer()
+                    }
+                }
+                
             }
         }
     }
