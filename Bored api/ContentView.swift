@@ -51,7 +51,7 @@ struct ContentView: View {
                 .buttonStyle(GrowingButton())
                 .alert(isPresented: $showingAlert){
                     Alert(title: Text ("Loading Error"),
-                          message:Text("There was a problem loading the API Categories"),
+                          message:Text("There was a problem loading the API"),
                           dismissButton: .default(Text("OK"))
                     )
                 }
