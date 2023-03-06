@@ -11,10 +11,11 @@ import SwiftUI
 import Foundation
 import SwiftUI
 struct ContentView: View {
-    @State private var activity: String = ""
-    @State private var activityArray = [String]()
+    @State private var activity: String = "I wonder what you could do today?"
+    @State private var activityArray = [""]
     @State private var showingAlert = false
     @State private var isSelected = false
+    @State private var added = false
     var body: some View {
         ZStack{
             Color.green
@@ -25,15 +26,21 @@ struct ContentView: View {
                     .padding()
                 HStack {
                     Button {
-                        activityArray.append(activity)
+                        if added == false {
+                            activityArray.append(activity)
+                            added = true
+                        }
                     } label : {
-                       "+"
+                       Text("+")
                     }
                     .buttonStyle(GrowingButton())
+                    .shadow(color: isSelected ? .blue : .gray, radius: 5, x: 0.5, y: 0.5)
                     Text(activity)
                 }
                 Button {
+                    added = false
                     Task {
+                        
                        await GetActivity()
                     }
                 } label: {
@@ -45,6 +52,21 @@ struct ContentView: View {
                           message:Text("There was a problem loading the API Categories"),
                           dismissButton: .default(Text("OK"))
                     )
+                }
+                Text("Your list")
+                VStack {
+                    ForEach(0 ..< activityArray.count, id: \.self) { value in
+                        HStack{
+                            Button {
+                                
+                                activityArray.remove(at: value)
+                            } label : {
+                               Text("-")
+                            }
+                            .clipShape(Circle())
+                            Text("\(activityArray[value])")
+                        }
+                            }
                 }
                             
                 Spacer()
